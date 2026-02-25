@@ -2,29 +2,36 @@ using UnityEngine;
 
 public class BallBehavior : MonoBehaviour
 {
-    [SerializeField] private float _launchForce = 5.0f;
-
     private Rigidbody2D _rb;
     
+    private AudioSource _source;
+    [SerializeField] private AudioClip _paddleHit;
+    [SerializeField] private AudioClip _wallHit;
+    [SerializeField] private AudioClip _brickHit;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-
-        Vector2 _direction = new Vector2(
-            GetNonZeroRandomFloat(),
-            GetNonZeroRandomFloat()
-        ).normalized;
-        
-        _rb.AddForce(_direction * _launchForce, ForceMode2D.Impulse);
+        _source = GetComponent<AudioSource>();
     }
-    float GetNonZeroRandomFloat(float min = -1.0f, float max = 1.0f)
+    
+    private void Update()
     {
-        float num;
-        do
+        _rb.simulated = GameBehavior.Instance.GameMode == Utilities.GameState.Play;
+    }
+    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
         {
-            num = Random.Range(min, max);
-        } while (Mathf.Approximately(num, 0.0f));
-        
-        return num;
+            _source.PlayOneShot(_wallHit);
+        }
+        else if (collision.gameObject.CompareTag("Paddle"))
+        {
+            _source.PlayOneShot(_paddleHit);
+        }
+        else if (collision.gameObject.CompareTag("Brick"))
+        {
+            _source.PlayOneShot(_brickHit);
+        }
     }
 }

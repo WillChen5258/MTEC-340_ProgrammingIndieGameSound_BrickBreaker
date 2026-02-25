@@ -8,6 +8,18 @@ public class GameBehavior : MonoBehaviour
     [SerializeField] private GameObject _ballPrefab;
     [SerializeField] private float _launchForce = 5.0f;
     [SerializeField] private TMP_Text _scoreTextUI;
+    [SerializeField] private TMP_Text _pauseTextUI;
+   
+    private Utilities.GameState _gameMode;
+    public Utilities.GameState GameMode
+    {
+        get => _gameMode;
+        set
+        {
+            _gameMode = value;
+            _pauseTextUI.enabled = GameMode != Utilities.GameState.Play;
+        }
+    }
     
     private int _score;
     public int ScoreValue
@@ -36,7 +48,18 @@ public class GameBehavior : MonoBehaviour
     private void Start()
     {
         ScoreValue = 0;
+        GameMode = Utilities.GameState.Play;
         Serve();
+    }
+    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            GameMode = GameMode == Utilities.GameState.Play ?
+                Utilities.GameState.Pause :
+                Utilities.GameState.Play;
+        }
     }
 
     private void Serve()

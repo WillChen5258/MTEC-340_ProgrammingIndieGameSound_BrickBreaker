@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3527075592544735429}
   m_Layer: 0
   m_Name: Brick
-  m_TagString: Untagged
+  m_TagString: Brick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,3 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e340ac665c54fa19f8ea5391ebc87d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrickBehavior
+  _health: 3
+  _healthColors:
+  - {r: 0.2224101, g: 0.3962264, b: 0.3962264, a: 1}
+  - {r: 0.18004628, g: 0.3207547, b: 0.3207547, a: 1}
+  - {r: 0.14509805, g: 0.25882354, b: 0.25882354, a: 1}
